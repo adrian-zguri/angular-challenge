@@ -12,6 +12,7 @@ export interface User {
 })
 export class InviteService {
   private readonly url = 'http://localhost:3000/users';
+  private invitedUsers: User[];
 
   constructor(private http: HttpClient) {}
 
@@ -21,5 +22,29 @@ export class InviteService {
 
   invite(user: User) {
     this.http.post<User>(this.url, user);
+  }
+
+  /**
+   * Send Email to the given users and save the users internally
+   * @param users[] array of Users
+   */
+  sendEmail(users: User[]) {
+    for (let user of users) {
+      this.invite(user);
+    }
+
+    this.invitedUsers = users;
+  }
+
+  /**
+   * Gives the invited users back
+   * @returns array of Users
+   */
+  getInvitedUsers() : User[] {
+    let invUsers = this.invitedUsers;
+
+    // clear the data so it is not used again
+    this.invitedUsers = new Array<User>();
+    return invUsers;
   }
 }

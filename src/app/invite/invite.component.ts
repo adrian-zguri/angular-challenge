@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../service/invite.service';
+import { InviteService } from '../service/invite.service';
+import { Router } from '@angular/router';
 
 const users: User[] = [
   { email: 'user0@comtravo.com' },
@@ -21,13 +23,20 @@ const users: User[] = [
   styleUrls: ['./invite.component.css']
 })
 export class InviteComponent implements OnInit {
-  constructor() {}
+  constructor(private inviteService: InviteService, private router: Router) {
+
+  }
 
   ngOnInit(): void {
     console.log(users);
   }
 
+  /**
+   * Send the Emails and redirect to the list component
+   */
   onSubmit(): void {
-    alert('Invite users');
+    this.inviteService.sendEmail(users);
+
+    this.router.navigate(['list'], {});
   }
 }

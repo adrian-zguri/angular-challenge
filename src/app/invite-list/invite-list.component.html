@@ -1,3 +1,4 @@
+<p>Registered users</p>
 <table>
   <thead>
     <tr>
@@ -9,6 +10,22 @@
     <tr *ngFor="let user of (users$ | async)">
       <td>{{ user.id }}</td>
       <td>{{ user.email }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="successfullyInvitedUsers">{{ successfullyInvitedUsers }} successfully invited.</p>
+
+<p></p>
+<table *ngIf="showErrorOnExistingUsers">
+  <thead>
+    <tr>
+      <th>Error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of (users$ | async)">
+      <td>{{ user.email }} already exists</td>
     </tr>
   </tbody>
 </table>
